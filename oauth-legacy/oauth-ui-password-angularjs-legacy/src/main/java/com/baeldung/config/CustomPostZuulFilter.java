@@ -50,7 +50,7 @@ public class CustomPostZuulFilter extends ZuulFilter {
                 logger.info("refresh token = " + refreshToken);
 
             }
-            if (requestURI.contains("oauth/token") && requestMethod.equals("DELETE")) {
+            if (requestURI.contains("oauth/token") && "DELETE".equals(requestMethod)) {
                 final Cookie cookie = new Cookie("refreshToken", "");
                 cookie.setMaxAge(0);
                 cookie.setPath(ctx.getRequest().getContextPath() + "/oauth/token");
