@@ -6,10 +6,10 @@ import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -20,7 +20,7 @@ public class BarController {
 
     // API - write, secured with scopes
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @RequestMapping(method = RequestMethod.GET, value = "/bars/{id}")
+    @GetMapping(value = "/bars/{id}")
     @ResponseBody
     public Bar findById(@PathVariable final long id) {
         return new Bar(Long.parseLong(randomNumeric(2)), randomAlphabetic(4));
@@ -28,7 +28,7 @@ public class BarController {
 
     // API - write, secured with scopes
     @PreAuthorize("#oauth2.hasScope('barScope') and #oauth2.hasScope('writeScope') and hasRole('ROLE_ADMIN')")
-    @RequestMapping(method = RequestMethod.POST, value = "/bars")
+    @PostMapping(value = "/bars")
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public Bar create(@RequestBody final Bar bar) {
